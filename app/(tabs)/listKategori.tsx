@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { Dimensions, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, FlatList, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const kategori = [
   { id: '1', nama: 'Aqidah', link: '/aqidah' },
@@ -10,63 +10,53 @@ const kategori = [
 ];
 
 const { width, height } = Dimensions.get('window');
-const CARD_WIDTH = width * 0.80;
-
-function BackgroundStripes() {
-  // Garis-garis dengan warna hijau pastel lebih terang
-  return (
-    <View style={StyleSheet.absoluteFill}>
-      {[...Array(16)].map((_, i) => (
-        <View
-          key={i}
-          style={{
-            position: 'absolute',
-            left: i * 40 - 80,
-            top: 0,
-            width: 2,
-            height: height * 1.2,
-            backgroundColor: '#6ee7b7', // hijau pastel terang
-            opacity: 0.18,
-            transform: [{ rotate: '-18deg' }],
-            borderRadius: 2,
-          }}
-        />
-      ))}
-    </View>
-  );
-}
+const CARD_WIDTH = width * 0.89;
 
 export default function ListKategori() {
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
-      <BackgroundStripes />
-      <Text style={styles.heading}>List Kategori Kajian</Text>
-      <FlatList
-        data={kategori}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.card}
-            activeOpacity={0.9}
-            onPress={() => router.push(item.link)}
-          >
-            <Text style={styles.cardText}>{item.nama}</Text>
-            <View style={styles.cardAccent} />
-          </TouchableOpacity>
-        )}
-        contentContainerStyle={styles.list}
-        showsVerticalScrollIndicator={false}
-      />
-    </View>
+    <ImageBackground
+      source={require('@/assets/images/background.jpg')}
+      style={styles.bg}
+      resizeMode="cover"
+    >
+      <View style={styles.overlay} />
+      <View style={styles.container}>
+        <Text style={styles.heading}>List Kategori Kajian</Text>
+        <FlatList
+          data={kategori}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.card}
+              activeOpacity={0.9}
+              onPress={() => router.push(item.link)}
+            >
+              <Text style={styles.cardText}>{item.nama}</Text>
+              <View style={styles.cardAccent} />
+            </TouchableOpacity>
+          )}
+          contentContainerStyle={styles.list}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  bg: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(187, 247, 208, 0.55)', // hijau muda transparan agar teks tetap jelas
+  },
   container: {
     flex: 1,
-    backgroundColor: '#bbf7d0', // hijau muda dan terang
     paddingHorizontal: 0,
     paddingTop: 40,
     alignItems: 'center',
@@ -80,7 +70,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
     textAlign: 'center',
     letterSpacing: 1.5,
-    textShadowColor: '#6ee7b7',
+    textShadowColor: '#bbf7d0',
     textShadowOffset: { width: 1, height: 2 },
     textShadowRadius: 8,
     zIndex: 2,
@@ -105,7 +95,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: '#6ee7b7', // hijau pastel terang
+    borderColor: '#6ee7b7',
     overflow: 'hidden',
     zIndex: 2,
   },
