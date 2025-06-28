@@ -10,7 +10,7 @@ const kategori = [
 ];
 
 const { width, height } = Dimensions.get('window');
-const CARD_WIDTH = width * 0.3;
+const CARD_WIDTH = width * 0.80;
 
 function BackgroundStripes() {
   // Garis-garis dengan warna hijau pastel lebih terang
